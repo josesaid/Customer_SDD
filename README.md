@@ -8,7 +8,7 @@ Project page: https://josesaid.github.io/Customer_SDD/
 
 ## Overview
 
-- The spec in [`docs/specs/customer.md`](docs/specs/customer.md) is the source of truth (written in Spanish). It defines the entity, operations `CUST-01` to `CUST-05`, the response codes and the error format.
+- The spec in [`docs/specs/customer.md`](docs/specs/customer.md) is the source of truth. It defines the entity, operations `CUST-01` to `CUST-05`, the response codes and the error format.
 - Each test in `CustomerApiTest` names the operation it verifies (`CUST-0X`) in its `@DisplayName`, which gives traceability from spec to test.
 - Behavior changes start in the spec, then the tests, then the code.
 

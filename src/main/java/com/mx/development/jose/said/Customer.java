@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 import java.time.Instant;
 
-/** Entidad definida en docs/specs/customer.md (sección Entidad). */
+/** Entity defined in docs/specs/customer.md (Entity section). */
 @Entity
 @Table(name = "customers")
 public class Customer {
@@ -38,7 +38,7 @@ public class Customer {
     private Instant createdAt;
 
     protected Customer() {
-        // requerido por JPA
+        // required by JPA
     }
 
     public Customer(String firstName, String lastName, String email, String phone) {
@@ -53,7 +53,7 @@ public class Customer {
         this.createdAt = Instant.now();
     }
 
-    /** Reemplaza los campos editables (CUST-04). */
+    /** Replaces the editable fields (CUST-04). */
     public void update(String firstName, String lastName, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -61,7 +61,7 @@ public class Customer {
         this.phone = phone;
     }
 
-    /** Borrado lógico (CUST-05). */
+    /** Logical delete (CUST-05). */
     public void deactivate() {
         this.active = false;
     }

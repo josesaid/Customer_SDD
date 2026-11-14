@@ -33,7 +33,7 @@ public class CustomerService {
         return CustomerResponse.from(find(id));
     }
 
-    /** CUST-03: active == null devuelve todos. */
+    /** CUST-03: active == null returns all customers. */
     @Transactional(readOnly = true)
     public List<CustomerResponse> findAll(Boolean active) {
         List<Customer> customers = (active == null)
@@ -54,7 +54,7 @@ public class CustomerService {
         return CustomerResponse.from(customer);
     }
 
-    /** CUST-05: borrado lógico, idempotente. */
+    /** CUST-05: logical delete, idempotent. */
     public void deactivate(Long id) {
         find(id).deactivate();
     }

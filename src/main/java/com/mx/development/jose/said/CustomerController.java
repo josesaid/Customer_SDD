@@ -16,7 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
-/** Endpoints definidos en docs/specs/customer.md (CUST-01 a CUST-05). */
+/** Endpoints defined in docs/specs/customer.md (CUST-01 to CUST-05). */
 @RestController
 @RequestMapping("/api/customers")
 public class CustomerController {

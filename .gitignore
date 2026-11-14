@@ -45,23 +45,23 @@ dist/
 nbdist/
 .nb-gradle/
 
-# Herramientas locales (GitHub Copilot modernize)
+# Local tools (GitHub Copilot modernize)
 .github/modernize/
 
-# Entorno y secretos
+# Environment and secrets
 .env
 .env.*
 *.env
 !.env.example
 
-# Logs y cobertura
+# Logs and coverage
 logs/
 coverage/
 
-# H2 en archivo
+# H2 file database
 *.mv.db
 *.trace.db
 
-# SO
+# OS
 .DS_Store
 Thumbs.db

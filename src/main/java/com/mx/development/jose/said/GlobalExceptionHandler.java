@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-/** Formato de errores RFC 7807 según docs/specs/customer.md. */
+/** RFC 7807 error format as defined in docs/specs/customer.md. */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

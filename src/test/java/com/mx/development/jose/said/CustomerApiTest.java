@@ -18,8 +18,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Tests que verifican los criterios de docs/specs/customer.md.
- * El ID de la operación en cada @DisplayName es la trazabilidad con la spec.
+ * Tests that verify the criteria in docs/specs/customer.md.
+ * The operation ID in each @DisplayName provides traceability to the spec.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -40,10 +40,10 @@ class CustomerApiTest {
         repository.deleteAll();
     }
 
-    // ---- CUST-01 Crear ----
+    // ---- CUST-01 Create ----
 
     @Test
-    @DisplayName("CUST-01: crear cliente responde 201 con Location y normaliza el email a minúsculas")
+    @DisplayName("CUST-01: creating a customer returns 201 with Location and lowercases the email")
     void createReturns201() throws Exception {
         mvc.perform(post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -57,12 +57,12 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-01: body inválido responde 400 con errores por campo")
+    @DisplayName("CUST-01: invalid body returns 400 with per-field errors")
     void createInvalidReturns400() throws Exception {
         mvc.perform(post("/api/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("""
-                                {"firstName": "A", "lastName": "", "email": "no-es-email"}
+                                {"firstName": "A", "lastName": "", "email": "not-an-email"}
                                 """))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.errors.firstName").exists())
@@ -70,7 +70,7 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-01: email duplicado responde 409")
+    @DisplayName("CUST-01: duplicate email returns 409")
     void createDuplicateEmailReturns409() throws Exception {
         mvc.perform(post("/api/customers").contentType(MediaType.APPLICATION_JSON).content(VALID_BODY))
                 .andExpect(status().isCreated());
@@ -79,10 +79,10 @@ class CustomerApiTest {
                 .andExpect(status().isConflict());
     }
 
-    // ---- CUST-02 Obtener ----
+    // ---- CUST-02 Get ----
 
     @Test
-    @DisplayName("CUST-02: obtener cliente existente responde 200")
+    @DisplayName("CUST-02: getting an existing customer returns 200")
     void getExistingReturns200() throws Exception {
         long id = createAndGetId(VALID_BODY);
 
@@ -93,17 +93,17 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-02: obtener cliente inexistente responde 404")
+    @DisplayName("CUST-02: getting a missing customer returns 404")
     void getMissingReturns404() throws Exception {
         mvc.perform(get("/api/customers/{id}", 999999L))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.title").value("Customer not found"));
     }
 
-    // ---- CUST-03 Listar ----
+    // ---- CUST-03 List ----
 
     @Test
-    @DisplayName("CUST-03: listar con active=true excluye clientes inactivos")
+    @DisplayName("CUST-03: listing with active=true excludes inactive customers")
     void listActiveFilterExcludesInactive() throws Exception {
         long activeId = createAndGetId(VALID_BODY);
         long inactiveId = createAndGetId("""
@@ -118,7 +118,7 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-03: listar sin filtro devuelve todos ordenados por apellido")
+    @DisplayName("CUST-03: listing without a filter returns all customers sorted by last name")
     void listWithoutFilterReturnsAllSorted() throws Exception {
         createAndGetId(VALID_BODY); // Lopez
         createAndGetId("""
@@ -132,10 +132,10 @@ class CustomerApiTest {
                 .andExpect(jsonPath("$[1].lastName").value("Lopez"));
     }
 
-    // ---- CUST-04 Actualizar ----
+    // ---- CUST-04 Update ----
 
     @Test
-    @DisplayName("CUST-04: actualizar cliente responde 200 con los datos nuevos")
+    @DisplayName("CUST-04: updating a customer returns 200 with the new data")
     void updateReturns200() throws Exception {
         long id = createAndGetId(VALID_BODY);
 
@@ -149,7 +149,7 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-04: actualizar con body inválido responde 400")
+    @DisplayName("CUST-04: updating with an invalid body returns 400")
     void updateInvalidReturns400() throws Exception {
         long id = createAndGetId(VALID_BODY);
 
@@ -162,7 +162,7 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-04: actualizar cliente inexistente responde 404")
+    @DisplayName("CUST-04: updating a missing customer returns 404")
     void updateMissingReturns404() throws Exception {
         mvc.perform(put("/api/customers/{id}", 999999L)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -171,7 +171,7 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-04: usar el email de otro cliente responde 409")
+    @DisplayName("CUST-04: using another customer's email returns 409")
     void updateWithOtherCustomersEmailReturns409() throws Exception {
         createAndGetId(VALID_BODY); // ana@example.com
         long otherId = createAndGetId("""
@@ -184,10 +184,10 @@ class CustomerApiTest {
                 .andExpect(status().isConflict());
     }
 
-    // ---- CUST-05 Borrado lógico ----
+    // ---- CUST-05 Logical delete ----
 
     @Test
-    @DisplayName("CUST-05: borrar cliente responde 204 y lo marca inactivo sin eliminarlo")
+    @DisplayName("CUST-05: deleting a customer returns 204 and marks it inactive without removing it")
     void deleteIsLogical() throws Exception {
         long id = createAndGetId(VALID_BODY);
 
@@ -199,13 +199,13 @@ class CustomerApiTest {
     }
 
     @Test
-    @DisplayName("CUST-05: borrar cliente inexistente responde 404")
+    @DisplayName("CUST-05: deleting a missing customer returns 404")
     void deleteMissingReturns404() throws Exception {
         mvc.perform(delete("/api/customers/{id}", 999999L)).andExpect(status().isNotFound());
     }
 
     @Test
-    @DisplayName("CUST-05: borrar un cliente ya inactivo responde 204 (idempotente)")
+    @DisplayName("CUST-05: deleting an already inactive customer returns 204 (idempotent)")
     void deleteIsIdempotent() throws Exception {
         long id = createAndGetId(VALID_BODY);
         mvc.perform(delete("/api/customers/{id}", id)).andExpect(status().isNoContent());

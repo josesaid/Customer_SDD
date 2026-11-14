@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/** Body de CUST-01 y CUST-04 según docs/specs/customer.md. */
+/** Request body for CUST-01 and CUST-04 as defined in docs/specs/customer.md. */
 public record CustomerRequest(
         @NotBlank @Size(min = 2, max = 50) String firstName,
         @NotBlank @Size(min = 2, max = 50) String lastName,

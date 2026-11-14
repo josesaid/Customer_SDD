@@ -15,7 +15,7 @@
     <artifactId>Customer_SDD</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Customer_SDD</name>
-    <description>CRUD de clientes definido con Spec-Driven Development</description>
+    <description>Customer CRUD defined with Spec-Driven Development</description>
 
     <properties>
         <java.version>21</java.version>
