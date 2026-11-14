@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: customer-sdd
+  datasource:
+    url: jdbc:h2:mem:customersdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    open-in-view: false
