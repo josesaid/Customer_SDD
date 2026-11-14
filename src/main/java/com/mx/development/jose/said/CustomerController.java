@@ -1,4 +1,4 @@
-package com.example.customers;
+package com.mx.development.jose.said;
 
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.example.customers;
+package com.mx.development.jose.said;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

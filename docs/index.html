@@ -1,0 +1,225 @@
+<!doctype html>
+<!-- Theme: Neon Night (deep indigo night, magenta and cyan neon accents) -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Customer_SDD</title>
+  <meta name="description" content="Customer CRUD REST API with Spring Boot 3.5 and Java 21, built with Spec-Driven Development.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f1fb;
+      --surface: #ffffff;
+      --surface-2: #ece6f8;
+      --text: #1d1530;
+      --muted: #5d5275;
+      --border: #d9cfee;
+      --magenta: #c2187a;
+      --cyan: #0b7f95;
+      --glow: transparent;
+      --code-bg: #1d1530;
+      --code-text: #f4f1fb;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0820;
+        --surface: #140f33;
+        --surface-2: #1c1645;
+        --text: #ece8ff;
+        --muted: #a69ccc;
+        --border: #2d2566;
+        --magenta: #ff3fb4;
+        --cyan: #3ce6ff;
+        --glow: rgba(255, 63, 180, .35);
+        --code-bg: #07051a;
+        --code-text: #d8f9ff;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font: 16px/1.6 "Space Grotesk", system-ui, sans-serif;
+    }
+    a { color: var(--cyan); }
+    code, pre { font-family: "JetBrains Mono", ui-monospace, monospace; }
+    .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+    header {
+      padding: 56px 0 40px;
+      border-bottom: 1px solid var(--border);
+      background:
+        radial-gradient(600px 240px at 15% 0%, var(--glow), transparent 70%),
+        var(--bg);
+    }
+    .eyebrow {
+      font: 600 13px/1 "JetBrains Mono", monospace;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--cyan);
+    }
+    h1 {
+      margin: 12px 0 8px;
+      font-size: clamp(34px, 7vw, 56px);
+      line-height: 1.05;
+      color: var(--magenta);
+      text-shadow: 0 0 24px var(--glow);
+      overflow-wrap: anywhere;
+    }
+    .lead { max-width: 640px; color: var(--muted); font-size: 18px; margin: 0; }
+    .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .btn {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 8px;
+      border: 1px solid var(--magenta);
+      color: var(--magenta);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .btn.primary { background: var(--magenta); color: var(--bg); }
+
+    main section { padding: 36px 0; border-bottom: 1px solid var(--border); }
+    h2 { margin: 0 0 16px; font-size: 24px; }
+    h2::before { content: "// "; color: var(--cyan); font-family: "JetBrains Mono", monospace; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+    .chips li {
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .chips b { color: var(--cyan); font-weight: 600; }
+
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+    }
+    .card .n { font: 600 13px "JetBrains Mono", monospace; color: var(--magenta); }
+    .card h3 { margin: 6px 0; font-size: 18px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+    th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    th { color: var(--muted); font-weight: 600; font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+    td code { color: var(--cyan); }
+    .m { font: 600 12px "JetBrains Mono", monospace; padding: 2px 8px; border-radius: 4px; background: var(--surface-2); color: var(--magenta); }
+
+    pre {
+      background: var(--code-bg);
+      color: var(--code-text);
+      padding: 16px;
+      border-radius: 10px;
+      overflow-x: auto;
+      font-size: 14px;
+      border: 1px solid var(--border);
+    }
+    ul.plain { margin: 0; padding-left: 20px; }
+    footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <span class="eyebrow">Spec-Driven Development · Spring Boot</span>
+      <h1>Customer_SDD</h1>
+      <p class="lead">A customer CRUD REST API where every operation is written first in a spec, covered by tests that carry the spec ID, and only then implemented.</p>
+      <div class="links">
+        <a class="btn primary" href="https://github.com/josesaid/Customer_SDD">View source on GitHub</a>
+        <a class="btn" href="https://github.com/josesaid/Customer_SDD/blob/main/docs/specs/customer.md">Read the spec</a>
+        <a class="btn" href="https://josesaid.github.io/">All projects</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>Stack</h2>
+      <ul class="chips">
+        <li><b>Java</b> 21</li>
+        <li><b>Spring Boot</b> 3.5.4</li>
+        <li><b>Spring Data JPA</b></li>
+        <li><b>Bean Validation</b></li>
+        <li><b>H2</b> in-memory</li>
+        <li><b>RFC 7807</b> ProblemDetail</li>
+        <li><b>JUnit 5</b> + MockMvc</li>
+        <li><b>Maven</b></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>How SDD works here</h2>
+      <div class="steps">
+        <div class="card">
+          <span class="n">01 · SPEC</span>
+          <h3>Write the spec</h3>
+          <p><code>docs/specs/customer.md</code> defines the entity, operations CUST-01 to CUST-05, status codes and error format.</p>
+        </div>
+        <div class="card">
+          <span class="n">02 · TEST</span>
+          <h3>Trace it in tests</h3>
+          <p>Each test names its operation ID in <code>@DisplayName</code>. 14 tests cover every rule.</p>
+        </div>
+        <div class="card">
+          <span class="n">03 · CODE</span>
+          <h3>Implement</h3>
+          <p>Controller, service and repository change until <code>mvn test</code> passes.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Endpoints</h2>
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Method</th><th>Path</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>CUST-01</td><td><span class="m">POST</span></td><td><code>/api/customers</code></td><td>201 + Location · 400 · 409 duplicate email</td></tr>
+            <tr><td>CUST-02</td><td><span class="m">GET</span></td><td><code>/api/customers/{id}</code></td><td>200 (also inactive) · 404</td></tr>
+            <tr><td>CUST-03</td><td><span class="m">GET</span></td><td><code>/api/customers?active=</code></td><td>200, sorted by last name</td></tr>
+            <tr><td>CUST-04</td><td><span class="m">PUT</span></td><td><code>/api/customers/{id}</code></td><td>200 · 400 · 404 · 409</td></tr>
+            <tr><td>CUST-05</td><td><span class="m">DELETE</span></td><td><code>/api/customers/{id}</code></td><td>204 logical, idempotent · 404</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Design notes</h2>
+      <ul class="plain">
+        <li>Emails are trimmed, stored in lowercase and must be unique.</li>
+        <li>Delete is logical: it sets <code>active = false</code> and keeps the record.</li>
+        <li>All errors are RFC 7807 <code>ProblemDetail</code>; validation errors include a per-field <code>errors</code> map.</li>
+        <li>Layers: <code>CustomerController</code> → <code>CustomerService</code> → <code>CustomerRepository</code> → H2.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Run it</h2>
+<pre>mvn test               # spec tests
+mvn spring-boot:run    # http://localhost:8080
+
+curl -i -X POST localhost:8080/api/customers \
+  -H 'Content-Type: application/json' \
+  -d '{"firstName":"Ana","lastName":"Lopez","email":"ana@example.com"}'</pre>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    Customer_SDD · <a href="https://github.com/josesaid/Customer_SDD">github.com/josesaid/Customer_SDD</a> · <a href="https://josesaid.github.io/">josesaid.github.io</a>
+  </footer>
+</body>
+</html>

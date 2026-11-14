@@ -1,4 +1,4 @@
-package com.example.customers;
+package com.mx.development.jose.said;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

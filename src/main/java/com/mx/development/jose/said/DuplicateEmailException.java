@@ -1,4 +1,4 @@
-package com.example.customers;
+package com.mx.development.jose.said;
 
 public class DuplicateEmailException extends RuntimeException {
 

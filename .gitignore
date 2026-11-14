@@ -51,7 +51,12 @@ nbdist/
 # Entorno y secretos
 .env
 .env.*
+*.env
 !.env.example
+
+# Logs y cobertura
+logs/
+coverage/
 
 # H2 en archivo
 *.mv.db
